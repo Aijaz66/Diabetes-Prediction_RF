@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Diabetes Risk Prediction</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <style>
+    body {
+      background: linear-gradient(135deg, #6dd5ed, #2193b0);
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+    .card {
+      border-radius: 15px;
+      box-shadow: 0px 8px 20px rgba(0, 0, 0, 0.2);
+      padding: 20px;
+    }
+    .btn-custom {
+      background-color: #2193b0;
+      color: white;
+      border-radius: 8px;
+      font-weight: bold;
+      transition: 0.3s;
+    }
+    .btn-custom:hover {
+      background-color: #17677a;
+      color: white;
+    }
+    h2 {
+      font-weight: bold;
+      color: #333;
+      margin-bottom: 20px;
+    }
+    .result-box {
+      padding: 15px;
+      border-radius: 10px;
+      margin-top: 20px;
+    }
+    .high-risk {
+      background: #ffe5e5;
+      color: #c62828;
+      border: 1px solid #c62828;
+    }
+    .low-risk {
+      background: #e6f4ea;
+      color: #2e7d32;
+      border: 1px solid #2e7d32;
+    }
+    .slider-value {
+      font-weight: bold;
+      margin-left: 10px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="row justify-content-center">
+      <div class="col-lg-6 col-md-8 col-sm-12">
+        <div class="card">
+          <h2 class="text-center">🩺 Diabetes Risk Prediction</h2>
+          <form method="POST">
+
+            <!-- Age -->
+            <div class="mb-3">
+              <label class="form-label">Age: <span id="ageValue">40</span></label>
+              <input type="range" name="age" class="form-range" min="1" max="100" step="1" value="40" oninput="ageValue.textContent=this.value">
+            </div>
+
+            <!-- BMI -->
+            <div class="mb-3">
+              <label class="form-label">BMI: <span id="bmiValue">25</span></label>
+              <input type="range" name="bmi" class="form-range" min="10" max="50" step="0.1" value="25" oninput="bmiValue.textContent=this.value">
+            </div>
+
+            <!-- HbA1c Level -->
+            <div class="mb-3">
+              <label class="form-label">HbA1c Level: <span id="hba1cValue">5.5</span></label>
+              <input type="range" name="hba1c" class="form-range" min="3" max="15" step="0.1" value="5.5" oninput="hba1cValue.textContent=this.value">
+            </div>
+
+            <!-- Blood Glucose Level -->
+            <div class="mb-3">
+              <label class="form-label">Blood Glucose Level: <span id="glucoseValue">100</span></label>
+              <input type="range" name="glucose" class="form-range" min="50" max="300" step="1" value="100" oninput="glucoseValue.textContent=this.value">
+            </div>
+
+            <!-- Gender -->
+            <div class="mb-3">
+              <label class="form-label">Gender</label>
+              <select name="gender" class="form-select">
+                <option>Male</option>
+                <option>Female</option>
+              </select>
+            </div>
+
+            <!-- Hypertension -->
+            <div class="mb-3">
+              <label class="form-label">Hypertension</label>
+              <select name="hypertension" class="form-select">
+                <option value="0">No</option>
+                <option value="1">Yes</option>
+              </select>
+            </div>
+
+            <!-- Heart Disease -->
+            <div class="mb-3">
+              <label class="form-label">Heart Disease</label>
+              <select name="heart_disease" class="form-select">
+                <option value="0">No</option>
+                <option value="1">Yes</option>
+              </select>
+            </div>
+
+            <!-- Smoking History -->
+            <div class="mb-3">
+              <label class="form-label">Smoking History</label>
+              <select name="smoking" class="form-select">
+                <option>never</option>
+                <option>former</option>
+                <option>not current</option>
+                <option>ever</option>
+                <option>current</option>
+              </select>
+            </div>
+
+            <!-- Submit -->
+            <div class="d-grid">
+              <button type="submit" class="btn btn-custom">Predict</button>
+            </div>
+          </form>
+
+          {% if result %}
+          <div class="result-box {{ 'high-risk' if 'High' in result else 'low-risk' }}">
+            <h4 class="text-center">{{ result }}</h4>
+            <p class="text-center">Probability: {{ probability }}</p>
+          </div>
+          {% endif %}
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
